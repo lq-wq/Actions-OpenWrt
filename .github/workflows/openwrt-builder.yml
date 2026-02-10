@@ -114,14 +114,14 @@ jobs:
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         if ls openwrt/bin/targets/*/* &>/dev/null; then
-        cd openwrt/bin/targets/*/*
-        rm -rf packages
-        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "status=success" >> $GITHUB_OUTPUT
-      else
-        echo "未找到目标目录 openwrt/bin/targets/*/*，请检查OpenWrt是否编译成功。"
-        exit 1
-      fi
+          cd openwrt/bin/targets/*/*
+          rm -rf packages
+          echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+          echo "status=success" >> $GITHUB_OUTPUT
+        else
+          echo "未找到目标目录 openwrt/bin/targets/*/*，请检查OpenWrt是否编译成功。"
+          exit 1
+        fi
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
