@@ -70,6 +70,14 @@ jobs:
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
 
+    - name: Fix AdGuardHome go.mod
+      run: |
+        if [ -f openwrt/feeds/kenzo/adguardhome/go.mod ]; then
+          # 删除 ignore 和 tool 块内容
+          sed -i '/^ignore/,/^)/d' openwrt/feeds/kenzo/adguardhome/go.mod
+          sed -i '/^tool/,/^)/d' openwrt/feeds/kenzo/adguardhome/go.mod
+        fi
+        
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
